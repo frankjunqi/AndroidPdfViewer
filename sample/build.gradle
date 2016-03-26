@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
     defaultConfig {
         applicationId "com.tekinarslan.sample"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 15
         versionCode 1
         versionName "1.0"
     }

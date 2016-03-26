@@ -1,8 +1,10 @@
 package com.tekinarslan.sample;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +26,6 @@ public class PdfFragment extends Fragment {
     private String mFilePath;
     Bundle args = new Bundle();
     private static final String TAG = "PdfFragment";
-    private SearchTask mSearchTask;
 
     public PdfFragment() {
     }
@@ -56,29 +57,12 @@ public class PdfFragment extends Fragment {
                 }
 
             };
-
             mDocView.setAdapter(new MuPDFPageAdapter(mContext, core));
             mainLayout.addView(mDocView);
         }
 
-        mSearchTask = new SearchTask(mContext, core) {
-
-            @Override
-            protected void onTextFound(SearchTaskResult result) {
-                SearchTaskResult.set(result);
-                mDocView.setDisplayedViewIndex(result.pageNumber);
-                mDocView.resetupChildren();
-            }
-        };
 
         return rootView;
-    }
-
-    public void search(int direction, String text) {
-        int displayPage = mDocView.getDisplayedViewIndex();
-        SearchTaskResult r = SearchTaskResult.get();
-        int searchPage = r != null ? r.pageNumber : -1;
-        mSearchTask.go(text, direction, displayPage, searchPage);
     }
 
 
@@ -119,8 +103,6 @@ public class PdfFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mSearchTask != null)
-            mSearchTask.stop();
     }
 }
 
